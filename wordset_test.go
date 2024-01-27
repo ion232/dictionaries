@@ -10,15 +10,10 @@ import (
 	"github.com/santhosh-tekuri/jsonschema"
 )
 
-func TestWordsetV1(t *testing.T) {
-	t.Parallel()
+func ValidateFile(t *testing.T, sch *jsonschema.Schema, filename string) {
+	path := filepath.Join("wordset", "base", "sections", filename)
 
-	sch, err := jsonschema.Compile(filepath.Join("wordset", "base", "schema.json"))
-	if err != nil {
-		t.Error(err)
-	}
-
-	data, err := os.ReadFile(filepath.Join("wordset", "base", "wordset.json"))
+	data, err := os.ReadFile(path)
 	if err != nil {
 		t.Errorf("%#v", err)
 	}
@@ -31,5 +26,19 @@ func TestWordsetV1(t *testing.T) {
 	reader := bytes.NewReader(data)
 	if err = sch.Validate(reader); err != nil {
 		t.Error(err)
+	}
+}
+
+func TestWordsetBase(t *testing.T) {
+	t.Parallel()
+
+	sch, err := jsonschema.Compile(filepath.Join("wordset", "base", "schema.json"))
+	if err != nil {
+		t.Error(err)
+	}
+
+	for _, r := range "abcdefghijklmnopqrstuvwxyz" {
+		filename := string(r) + ".json"
+		ValidateFile(t, sch, filename)
 	}
 }
