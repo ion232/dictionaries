@@ -1,0 +1,105 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "patternProperties": {
+        "^[a-zA-Z0-9 './#&öæāåÅé№¶😂☞-]+$": {
+            "type": "object",
+            "properties": {
+                "word": {
+                    "type": "string"
+                },
+                "wordset_id": {
+                    "type": "string"
+                },
+                "meanings": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "def": {
+                                "type": "string"
+                            },
+                            "example": {
+                                "type": "string"
+                            },
+                            "speech_part": {
+                                "type": "string"
+                            },
+                            "synonyms": {
+                                "type": "array",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "labels": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "is_dialect": {
+                                            "type": "boolean"
+                                        },
+                                        "parent": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "is_dialect": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "name",
+                                                "is_dialect"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "name",
+                                        "is_dialect"
+                                    ]
+                                }
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "def",
+                            "speech_part"
+                        ]
+                    }
+                },
+                "editors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "contributors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "word",
+                "wordset_id"
+            ]
+        }
+    },
+    "additionalProperties": false
+}
